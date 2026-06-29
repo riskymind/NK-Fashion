@@ -35,6 +35,7 @@ export default function Reviews() {
       <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: 38 }}>
           <div
+            data-eyebrow=""
             style={{
               fontSize: 13,
               fontWeight: 700,
@@ -45,6 +46,7 @@ export default function Reviews() {
             KIND WORDS
           </div>
           <h2
+            data-section-h2=""
             style={{
               fontFamily: "var(--font-bricolage), sans-serif",
               fontWeight: 800,
@@ -59,6 +61,7 @@ export default function Reviews() {
         </div>
 
         <div
+          className="nk-reviews-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit,minmax(248px,1fr))",
@@ -68,6 +71,7 @@ export default function Reviews() {
           {reviews.map((r) => (
             <div
               key={r.name}
+              data-review-card=""
               style={{
                 background: "rgba(251,243,228,0.07)",
                 border: "1px solid rgba(251,243,228,0.16)",

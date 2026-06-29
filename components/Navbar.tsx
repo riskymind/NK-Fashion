@@ -1,11 +1,14 @@
 "use client";
 
+import Image from "next/image";
+import logo from '../public/icon.jpeg';
+
 const WA_URL =
   "https://wa.me/2348162740294?text=Hi%20Nkechi%2C%20I%27d%20love%20to%20order%20a%20bespoke%20Ankara%20piece.";
 
 const links = [
   { href: "#work", label: "Lookbook" },
-  { href: "#services", label: "Services" },
+  // { href: "#services", label: "Services" },
   { href: "#about", label: "About" },
   { href: "#process", label: "Process" },
   { href: "#reviews", label: "Reviews" },
@@ -51,50 +54,66 @@ export default function Navbar() {
         style={{
           display: "flex",
           alignItems: "center",
-          gap: 12,
+          gap: 10,
           textDecoration: "none",
           color: "inherit",
         }}
       >
-        <span
+        {/* Circular image mark with gold ring */}
+        <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: 42,
-            height: 42,
+            width: 40,
+            height: 40,
             borderRadius: "50%",
-            background: "var(--ink)",
-            color: "var(--gold)",
-            fontFamily: "var(--font-bricolage), sans-serif",
-            fontWeight: 800,
-            fontSize: 17,
-            letterSpacing: "0.5px",
+            overflow: "hidden",
+            flexShrink: 0,
+            position: "relative",
+            boxShadow: "0 0 0 2px var(--gold), 0 0 0 4px var(--ink)",
           }}
         >
-          NK
-        </span>
-        <span style={{ display: "flex", flexDirection: "column", lineHeight: 1 }}>
+          <Image
+            src={logo}
+            alt="NK"
+            fill
+            style={{ objectFit: "cover", objectPosition: "center" }}
+            sizes="40px"
+          />
+        </div>
+
+        {/* Thin divider */}
+        <span
+          aria-hidden="true"
+          style={{
+            width: 1,
+            height: 28,
+            background: "rgba(34,23,51,0.18)",
+            flexShrink: 0,
+          }}
+        />
+
+        {/* Wordmark */}
+        <span style={{ display: "flex", flexDirection: "column", lineHeight: 1, gap: 3 }}>
           <span
             style={{
               fontFamily: "var(--font-bricolage), sans-serif",
               fontWeight: 800,
-              fontSize: 18,
-              letterSpacing: "-0.2px",
+              fontSize: 17,
+              letterSpacing: "-0.4px",
+              color: "var(--ink)",
             }}
           >
             Stitches by NK
           </span>
           <span
             style={{
-              fontSize: 10,
-              fontWeight: 600,
-              letterSpacing: "3px",
+              fontSize: 9,
+              fontWeight: 700,
+              letterSpacing: "2.8px",
               color: "var(--terra)",
-              marginTop: 3,
+              textTransform: "uppercase",
             }}
           >
-            FASHIONS · OWERRI
+            Fashions · Owerri
           </span>
         </span>
       </a>

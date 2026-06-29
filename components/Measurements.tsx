@@ -1,17 +1,33 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import profilePic from '../public/measure.jpg';
 
-const measurements = [
-  { n: "1", label: "Bust / chest" },
-  { n: "2", label: "Waist" },
-  { n: "3", label: "Hips" },
-  { n: "4", label: "Shoulder width" },
-  { n: "5", label: "Sleeve length" },
-  { n: "6", label: "Full length" },
-];
+const FIELDS = [
+  { key: "bust",      n: "1", label: "Bust / chest" },
+  { key: "waist",     n: "2", label: "Waist" },
+  { key: "hips",      n: "3", label: "Hips" },
+  { key: "shoulder",  n: "4", label: "Shoulder width" },
+  { key: "sleeve",    n: "5", label: "Sleeve length" },
+  { key: "length",    n: "6", label: "Full length" },
+] as const;
 
-const WA_MEASURE =
-  "https://wa.me/2348162740294?text=Hi%20Nkechi%2C%20here%20are%20my%20measurements%20(inches)%3A%0ABust%3A%20%0AWaist%3A%20%0AHips%3A%20%0AShoulder%3A%20%0ASleeve%3A%20%0AFull%20length%3A%20";
+type FieldKey = typeof FIELDS[number]["key"];
+type Values = Record<FieldKey, string>;
+
+function buildWhatsAppUrl(values: Values) {
+  const lines = [
+    "Hi Nkechi, here are my measurements (inches):",
+    `Bust: ${values.bust || "_"}`,
+    `Waist: ${values.waist || "_"}`,
+    `Hips: ${values.hips || "_"}`,
+    `Shoulder: ${values.shoulder || "_"}`,
+    `Sleeve: ${values.sleeve || "_"}`,
+    `Full length: ${values.length || "_"}`,
+  ].join("\n");
+  return `https://wa.me/2348162740294?text=${encodeURIComponent(lines)}`;
+}
 
 function WhatsAppIcon() {
   return (
@@ -31,6 +47,16 @@ function WhatsAppIcon() {
 }
 
 export default function Measurements() {
+  const [values, setValues] = useState<Values>({
+    bust: "", waist: "", hips: "", shoulder: "", sleeve: "", length: "",
+  });
+
+  const allFilled = FIELDS.every((f) => values[f.key].trim() !== "");
+
+  function handleChange(key: FieldKey, val: string) {
+    setValues((prev) => ({ ...prev, [key]: val }));
+  }
+
   return (
     <section
       id="measure"
@@ -49,9 +75,10 @@ export default function Measurements() {
           alignItems: "center",
         }}
       >
-        {/* Text */}
+        {/* Text + form */}
         <div>
           <div
+            data-eyebrow=""
             style={{
               fontSize: 13,
               fontWeight: 700,
@@ -62,6 +89,7 @@ export default function Measurements() {
             BEFORE YOU ORDER
           </div>
           <h2
+            data-section-h2=""
             style={{
               fontFamily: "var(--font-bricolage), sans-serif",
               fontWeight: 800,
@@ -82,8 +110,7 @@ export default function Measurements() {
             }}
           >
             Use a soft tape, measure over light clothing, and keep it snug —
-            not tight. Send the numbers in inches and I&apos;ll take it from
-            there.
+            not tight. Enter your numbers in inches below and hit send.
           </p>
 
           <div
@@ -93,17 +120,18 @@ export default function Measurements() {
               gap: 12,
             }}
           >
-            {measurements.map((m) => (
+            {FIELDS.map((f) => (
               <div
-                key={m.n}
+                key={f.key}
+                data-measure-card=""
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  gap: 12,
+                  gap: 10,
                   background: "#fff",
                   border: "1px solid rgba(34,23,51,0.1)",
                   borderRadius: 14,
-                  padding: 14,
+                  padding: "10px 12px",
                 }}
               >
                 <span
@@ -121,30 +149,74 @@ export default function Measurements() {
                     flexShrink: 0,
                   }}
                 >
-                  {m.n}
+                  {f.n}
                 </span>
-                <span style={{ fontWeight: 600, fontSize: 14.5 }}>{m.label}</span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <label
+                    htmlFor={`m-${f.key}`}
+                    style={{
+                      display: "block",
+                      fontWeight: 600,
+                      fontSize: 12.5,
+                      color: "#4a3f57",
+                      marginBottom: 3,
+                    }}
+                  >
+                    {f.label}
+                  </label>
+                  <input
+                    id={`m-${f.key}`}
+                    type="number"
+                    min="0"
+                    step="0.1"
+                    placeholder='e.g. 36"'
+                    value={values[f.key]}
+                    onChange={(e) => handleChange(f.key, e.target.value)}
+                    style={{
+                      width: "100%",
+                      border: "1px solid rgba(34,23,51,0.15)",
+                      borderRadius: 8,
+                      padding: "5px 8px",
+                      fontSize: 14,
+                      fontWeight: 600,
+                      color: "var(--ink)",
+                      background: "transparent",
+                      outline: "none",
+                      boxSizing: "border-box",
+                    }}
+                  />
+                </div>
               </div>
             ))}
           </div>
 
+          {!allFilled && (
+            <p style={{ fontSize: 13, color: "#9a8fa8", margin: "10px 0 0" }}>
+              Fill in all 6 measurements to enable the send button.
+            </p>
+          )}
+
           <a
-            href={WA_MEASURE}
+            href={allFilled ? buildWhatsAppUrl(values) : undefined}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={!allFilled ? (e) => e.preventDefault() : undefined}
+            aria-disabled={!allFilled}
             style={{
-              marginTop: 22,
+              marginTop: 18,
               display: "inline-flex",
               alignItems: "center",
               gap: 9,
               textDecoration: "none",
-              background: "var(--wa)",
+              background: allFilled ? "var(--wa)" : "rgba(31,178,85,0.35)",
               color: "#fff",
               fontWeight: 700,
               fontSize: 15.5,
               padding: "14px 22px",
               borderRadius: 999,
-              boxShadow: "0 10px 24px rgba(31,178,85,0.3)",
+              boxShadow: allFilled ? "0 10px 24px rgba(31,178,85,0.3)" : "none",
+              cursor: allFilled ? "pointer" : "not-allowed",
+              transition: "background 0.2s, box-shadow 0.2s",
             }}
           >
             <WhatsAppIcon />
@@ -153,36 +225,40 @@ export default function Measurements() {
         </div>
 
         {/* Image */}
-        <div style={{ position: "relative" }}>
+        <div data-measure-img="" style={{ position: "relative", zIndex: 2 }}>
           <div
             style={{
-              position: "absolute",
-              inset: "-18px auto auto -18px",
-              width: 110,
-              height: 110,
-              borderRadius: "50%",
-              background:
-                "repeating-conic-gradient(var(--emerald) 0deg 20deg,var(--cream) 20deg 40deg)",
-              zIndex: -1,
-            }}
-          />
-          <div
-            style={{
+              position: "relative",
               width: "100%",
-              borderRadius: 26,
-              background: "rgba(34,23,51,0.08)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 24px 48px rgba(34,23,51,0.2)",
+              aspectRatio: "4/5",
+              borderRadius: 0,
+              overflow: "hidden",
+              transition: "transform 0.35s cubic-bezier(0.34,1.56,0.64,1)",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLDivElement).style.transform = "scale(1.045)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLDivElement).style.transform = "scale(1)";
             }}
           >
-              <Image
-          src={profilePic}
-           alt="External descriptive text"
-          width={800}
-          height={800}
-        />
+            <Image
+              src={profilePic}
+              alt="Measurement guide"
+              fill
+              style={{ objectFit: "cover", objectPosition: "top center" }}
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(to bottom, var(--cream) 0%, transparent 16%, transparent 82%, var(--cream) 100%), " +
+                  "linear-gradient(to right, var(--cream) 0%, transparent 12%, transparent 88%, var(--cream) 100%)",
+                pointerEvents: "none",
+              }}
+            />
           </div>
         </div>
       </div>

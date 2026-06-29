@@ -1,3 +1,6 @@
+import Image from "next/image";
+import profilePic from '../public/nk_profile.jpeg';
+
 const tags = ["Hand-finished", "Owerri-based", "Nationwide delivery"];
 
 export default function About() {
@@ -20,8 +23,9 @@ export default function About() {
         }}
       >
         {/* Image */}
-        <div style={{ position: "relative" }}>
-          <div
+        <div data-about-img="" style={{ position: "relative" }}>
+          {/* Decorative stripe block */}
+          {/* <div
             style={{
               position: "absolute",
               inset: "auto auto -22px -22px",
@@ -32,36 +36,48 @@ export default function About() {
                 "repeating-linear-gradient(45deg,var(--wine) 0 14px,var(--gold) 14px 28px)",
               zIndex: -1,
             }}
-          />
+          /> */}
+
+          {/* Clip + scale wrapper */}
           <div
+            className="nk-about-img-wrap"
             style={{
+              position: "relative",
               width: "100%",
               aspectRatio: "4/5",
-              borderRadius: 26,
-              background: "rgba(34,23,51,0.08)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              borderTopLeftRadius: 0,
+              borderTopRightRadius: 64,
+              borderBottomRightRadius: 0,
+              borderBottomLeftRadius: 64,
+              overflow: "hidden",
               boxShadow: "0 26px 50px rgba(34,23,51,0.24)",
             }}
           >
-            <span
+            <Image
+              src={profilePic}
+              alt="Okenwa Nkechi at work"
+              fill
+              style={{ objectFit: "cover", objectPosition: "top center" }}
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+
+            {/* Blend edges into cream background */}
+            <div
               style={{
-                fontSize: 13,
-                color: "rgba(34,23,51,0.4)",
-                fontWeight: 600,
-                textAlign: "center",
-                padding: "0 24px",
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(to bottom, var(--cream) 0%, transparent 18%, transparent 80%, var(--cream) 100%)",
+                pointerEvents: "none",
               }}
-            >
-              Nkechi at work
-            </span>
+            />
           </div>
         </div>
 
         {/* Text */}
-        <div>
+        <div data-about-text="">
           <div
+            data-eyebrow=""
             style={{
               fontSize: 13,
               fontWeight: 700,
@@ -71,7 +87,7 @@ export default function About() {
           >
             MEET THE MAKER
           </div>
-          <h2
+          <h2 data-section-h2=""
             style={{
               fontFamily: "var(--font-bricolage), sans-serif",
               fontWeight: 800,
