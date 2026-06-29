@@ -41,6 +41,13 @@ export default function ScrollAnimations() {
         });
       });
 
+      // ── Services: spring stagger from below
+      gsap.from("[data-service-card]", {
+        ...ir,
+        scrollTrigger: { trigger: "#services", start: "top 72%" },
+        y: 60, opacity: 0, stagger: 0.15, duration: 0.88, ease: "back.out(1.3)",
+      });
+
       // ── Lookbook: clip-path wipe reveal staggered
       gsap.fromTo(
         "[data-lookbook-item]",

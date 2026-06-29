@@ -9,6 +9,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import FloatingCTA from "@/components/FloatingCTA";
 import ScrollAnimations from "@/components/ScrollAnimations";
+import Services from "@/components/Services";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Lookbook />
+      <Services />
       <About />
       <Process />
       <Measurements />
