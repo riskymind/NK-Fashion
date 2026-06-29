@@ -133,7 +133,7 @@ export default function Navbar() {
             {l.label}
           </a>
         ))}
-        <a
+        {/* <a
           href={WA_URL}
           target="_blank"
           rel="noopener noreferrer"
@@ -153,7 +153,7 @@ export default function Navbar() {
         >
           <WhatsAppIcon size={17} />
           Chat now
-        </a>
+        </a> */}
       </div>
     </nav>
   );

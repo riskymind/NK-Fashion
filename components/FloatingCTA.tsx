@@ -1,8 +1,7 @@
 "use client";
 
 const WA_URL =
-  "https://wa.me/2348162740294?text=Hi%20Nkechi%2C%20I%27d%20love%20to%20place%20an%20order.";
-
+  "https://wa.me/2348162740294?text=Hi%20Nkechi%2C%20I%27d%20love%20to%20make%20a%20dress%20for%20an%20event.";
 export default function FloatingCTA() {
   return (
     <a
