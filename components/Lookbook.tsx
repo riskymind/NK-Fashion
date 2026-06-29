@@ -38,24 +38,38 @@ function ImageSlot({
 }) {
   return (
     <div
+      data-lookbook-item=""
+      className={src ? "nk-about-img-wrap" : undefined}
       style={{
         gridColumn,
         position: "relative",
         aspectRatio: square ? "1/1" : "4/5",
-        borderRadius: 18,
-        background: "rgba(251,243,228,0.1)",
-        border: "1px solid rgba(251,243,228,0.18)",
+        borderRadius: 0,
+        background: "rgba(251,243,228,0.06)",
         overflow: "hidden",
       }}
     >
       {src ? (
-        <Image
-          src={src}
-          alt={label}
-          fill
-          style={{ objectFit: "cover" }}
-          sizes="(max-width: 768px) 100vw, 33vw"
-        />
+        <>
+          <Image
+            src={src}
+            alt={label}
+            fill
+            style={{ objectFit: "cover" }}
+            sizes="(max-width: 768px) 100vw, 33vw"
+          />
+          {/* Blend edges into the ink section background */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(to bottom, #221733 0%, transparent 18%, transparent 82%, #221733 100%), " +
+                "linear-gradient(to right,  #221733 0%, transparent 12%, transparent 88%, #221733 100%)",
+              pointerEvents: "none",
+            }}
+          />
+        </>
       ) : (
         <div
           style={{
@@ -69,7 +83,7 @@ function ImageSlot({
           <span
             style={{
               fontSize: 12,
-              color: "rgba(251,243,228,0.45)",
+              color: "rgba(251,243,228,0.35)",
               fontWeight: 600,
               textAlign: "center",
               padding: "0 12px",
@@ -106,6 +120,7 @@ export default function Lookbook() {
         >
           <div>
             <div
+              data-eyebrow=""
               style={{
                 fontSize: 13,
                 fontWeight: 700,
@@ -116,6 +131,7 @@ export default function Lookbook() {
               THE LOOKBOOK
             </div>
             <h2
+              data-section-h2=""
               style={{
                 fontFamily: "var(--font-bricolage), sans-serif",
                 fontWeight: 800,
@@ -137,8 +153,7 @@ export default function Lookbook() {
               margin: 0,
             }}
           >
-            A peek at recent gowns and ready-to-wear. Add your own photos to
-            fill each frame.
+            A peek at recent gowns and ready-to-wear.
           </p>
         </div>
 

@@ -1,6 +1,6 @@
 const exploreLinks = [
   { href: "#work", label: "Lookbook" },
-  { href: "#services", label: "Services & pricing" },
+  // { href: "#services", label: "Services & pricing" },
   { href: "#about", label: "About Nkechi" },
   { href: "#measure", label: "Measurement guide" },
 ];

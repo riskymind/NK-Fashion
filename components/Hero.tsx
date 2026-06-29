@@ -44,6 +44,7 @@ export default function Hero() {
       {/* Text column */}
       <div style={{ position: "relative", zIndex: 2 }}>
         <div
+          data-hero-badge=""
           style={{
             display: "inline-flex",
             alignItems: "center",
@@ -71,6 +72,7 @@ export default function Hero() {
         </div>
 
         <h1
+          data-hero-h1=""
           style={{
             fontFamily: "var(--font-bricolage), sans-serif",
             fontWeight: 800,
@@ -88,6 +90,7 @@ export default function Hero() {
         </h1>
 
         <p
+          data-hero-p=""
           style={{
             fontSize: "clamp(15.5px,1.6vw,18.5px)",
             lineHeight: 1.6,
@@ -103,6 +106,7 @@ export default function Hero() {
         </p>
 
         <div
+          data-hero-ctas=""
           style={{
             display: "flex",
             gap: 14,
@@ -152,6 +156,7 @@ export default function Hero() {
         </div>
 
         <div
+          data-hero-stats=""
           style={{
             display: "flex",
             gap: 30,
@@ -180,9 +185,9 @@ export default function Hero() {
       </div>
 
       {/* Image column */}
-      <div style={{ position: "relative", zIndex: 2 }}>
+      <div data-hero-img="" style={{ position: "relative", zIndex: 2 }}>
         {/* Spinning conic ring */}
-        <div
+        {/* <div
           style={{
             position: "absolute",
             inset: "-22px -22px auto auto",
@@ -195,9 +200,9 @@ export default function Hero() {
             // zIndex: -1,
             animation: "nkspin 36s linear infinite",
           }}
-        />
+        /> */}
         {/* Emerald blob */}
-        <div
+        {/* <div
           style={{
             position: "absolute",
             left: -70,
@@ -209,31 +214,42 @@ export default function Hero() {
             // zIndex: -1,
             transform: "rotate(12deg)",
           }}
-        />
+        /> */}
 
-        {/* Hero image placeholder */}
+        {/* Hero image */}
         <div
+          className="nk-about-img-wrap"
           style={{
+            position: "relative",
             width: "100%",
-            borderRadius: 28,
-            // background: "rgba(34,23,51,0.08)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            // boxShadow: "0 30px 60px rgba(34,23,51,0.28)",
+            aspectRatio: "4/5",
+            borderRadius: 0,
             overflow: "hidden",
           }}
         >
           <Image
-          src={profilePic}
-           alt="External descriptive text"
-          width={800}
-          height={800}
-        />
+            src={profilePic}
+            alt="Okenwa Nkechi – bespoke Ankara tailor, Owerri"
+            fill
+            priority
+            style={{ objectFit: "cover", objectPosition: "top center" }}
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+          {/* Blend edges into cream background */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(to bottom, var(--cream) 0%, transparent 16%, transparent 82%, var(--cream) 100%), " +
+                "linear-gradient(to right, var(--cream) 0%, transparent 12%, transparent 88%, var(--cream) 100%)",
+              pointerEvents: "none",
+            }}
+          />
         </div>
 
         {/* Badge */}
-        <div
+        {/* <div
           style={{
             position: "absolute",
             right: 18,
@@ -270,7 +286,7 @@ export default function Hero() {
               every piece, just for you
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </header>
   );
