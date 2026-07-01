@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import profilePic from '../public/measure.jpg';
+import profilePic from '../public/measure.jpeg'; 
 
 const FIELDS = [
   { key: "bust",      n: "1", label: "Bust / chest" },
